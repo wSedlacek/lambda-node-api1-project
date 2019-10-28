@@ -1,34 +1,38 @@
 import knex from 'knex';
 
 import { User } from '../models/User';
-import { knexConfig } from '../knexfile.js';
-const db = knex(knexConfig);
+import { knexConfig } from '../knexfile';
+const db = knex<User, User[]>(knexConfig);
 
-const find = () => {
-  return db('users');
+const find = async () => {
+  return await db('users');
 };
 
-const findById = (id: number) => {
-  return db('users')
+const findByID = async (id: string | number) => {
+  return await db('users')
     .where({ id: Number(id) })
     .first();
 };
 
 const insert = async (user: User) => {
   const ids = await db('users').insert(user);
-  return { id: ids[0] };
+  return ids[0];
 };
 
-const update = (id: number, user: User) => {
-  return db('users')
-    .where('id', Number(id))
-    .update(user);
+const update = async (id: string | number, user: User) => {
+  return (
+    (await db('users')
+      .where('id', Number(id))
+      .update(user)) === 1
+  );
 };
 
-const remove = (id: number) => {
-  return db('users')
-    .where('id', Number(id))
-    .del();
+const remove = async (id: string | number) => {
+  return (
+    (await db('users')
+      .where('id', Number(id))
+      .del()) === 1
+  );
 };
 
-export { find, findById, insert, update, remove };
+export { find, findByID, insert, update, remove };
