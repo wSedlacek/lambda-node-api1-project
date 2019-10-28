@@ -2,7 +2,7 @@ import { Config } from 'knex';
 
 const knexConfig: Config = {
   client: 'sqlite3',
-  connection: { filename: './data/lambda.db3' },
+  connection: { filename: './data/lambda.db' },
   useNullAsDefault: true,
   migrations: {
     directory: './data/migrations',
