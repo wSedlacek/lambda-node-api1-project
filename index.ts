@@ -72,4 +72,21 @@ server.put('/api/users/:id', async (req, res) => {
   res.json(user);
 });
 
+server.delete('/api/users/:id', async (req, res) => {
+  if (!(await validID(req.params.id))) {
+    res.status(404);
+    res.json({ message: 'The user with the specified ID does not exist.' });
+  }
+
+  const user = await findByID(req.params.id);
+  const deleted = await remove(req.params.id);
+  if (!deleted) {
+    res.status(500);
+    res.json({ error: 'The user could not be removed' });
+  }
+
+  res.status(201);
+  res.json(user);
+});
+
 server.listen(5000, () => console.log('Server running on http://localhost:5000'));
