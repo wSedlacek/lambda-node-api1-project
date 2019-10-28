@@ -1,4 +1,4 @@
-import { User } from './models/User';
+import { UserDTO } from './models';
 import { findByID } from './data/db';
 
 const validID = async (id: number | string) => {
@@ -6,9 +6,8 @@ const validID = async (id: number | string) => {
   return !!user;
 };
 
-const validUser = (user: User) => {
-  if (!user.name || !user.bio) return false;
-  else return true;
+const validUser = (user: UserDTO) => {
+  return !!user.name && !!user.bio;
 };
 
 export { validID, validUser };

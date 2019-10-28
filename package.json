@@ -3,9 +3,9 @@
   "description": "WEB API I Challenge",
   "license": "MIT",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "./dist/index.js",
   "scripts": {
-    "start": "ts-node index.ts"
+    "start": "ts-node ./src/index.ts"
   },
   "dependencies": {
     "cors": "^2.8.5",
