@@ -33,4 +33,21 @@ server.get('/api/users/:id', async (req, res) => {
   }
 });
 
+server.post('/api/users', async (req, res) => {
+  if (!validUser(req.body)) {
+    res.status(400);
+    res.json({ errorMessage: 'Please provide name and bio for the user.' });
+  }
+
+  try {
+    const id = await insert(req.body);
+    const user = await findByID(id);
+    res.status(201);
+    res.json(user);
+  } catch {
+    res.status(500);
+    res.json({ error: 'There was an error while saving the user to the database' });
+  }
+});
+
 server.listen(5000, () => console.log('Server running on http://localhost:5000'));
